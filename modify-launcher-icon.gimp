@@ -1,0 +1,12 @@
+(define (simple-colorize src dest hue saturation lightness)
+    (let* (
+        (image (car (gimp-file-load RUN-NONINTERACTIVE src src)))
+        (drawable (car (gimp-image-get-active-layer image)))
+        )
+    (gimp-drawable-colorize-hsl drawable hue saturation lightness)
+    (gimp-file-save RUN-NONINTERACTIVE image drawable dest dest)
+    (gimp-image-delete image)
+    )
+)
+(simple-colorize "{{ paths.icon.src }}" "{{ paths.icon.installed }}" {{ hsl }})
+(gimp-quit 0)
